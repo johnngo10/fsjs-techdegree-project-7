@@ -20,10 +20,12 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount() {}
+
+  performSearch = (query) => {
     axios
       .get(
-        "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a3068f50a631dd9ffb612590d08fb96b&tags=shibas&per_page=24&format=json&nojsoncallback=1"
+        `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a3068f50a631dd9ffb612590d08fb96b&tags=${query}&per_page=24&format=json&nojsoncallback=1`
       )
       .then((response) => {
         this.setState({
@@ -34,13 +36,13 @@ export default class App extends Component {
         // handle error
         console.log("Error fetching and parsing data", error);
       });
-  }
+  };
 
   render() {
     return (
       <BrowserRouter>
         <div className="App">
-          <SearchForm />
+          <SearchForm onSearch={this.performSearch} />
           <Nav />
           <Switch>
             <Route path="/" />
