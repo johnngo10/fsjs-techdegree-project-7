@@ -17,15 +17,37 @@ export default class App extends Component {
     super();
     this.state = {
       photos: [],
+      shibaPhotos: [],
+      catPhotos: [],
+      friesPhoto: [],
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    axios.all([
+      axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=shibas&per_page=24&format=json&nojsoncallback=1`),
+      axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=cats&per_page=24&format=json&nojsoncallback=1`),
+      axios.get(`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=fries&per_page=24&format=json&nojsoncallback=1`)
+    ])
+    .then(axios.spread = () =>)
+  }
+
+  componentDidMount() {
+    axios
+      .get(
+        `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=shibas&per_page=24&format=json&nojsoncallback=1`
+      )
+      .then((res) => {
+        this.setState({
+          shibaPhotos: res.data.photos.photo,
+        });
+      });
+  }
 
   performSearch = (query) => {
     axios
       .get(
-        `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a3068f50a631dd9ffb612590d08fb96b&tags=${query}&per_page=24&format=json&nojsoncallback=1`
+        `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
       )
       .then((response) => {
         this.setState({
@@ -45,10 +67,24 @@ export default class App extends Component {
           <SearchForm onSearch={this.performSearch} />
           <Nav />
           <Switch>
-            <Route path="/" />
-            <Route />
+            <Route exact path="/" />
+            <Route
+              exact
+              path="/shibas"
+              render={() => (
+                <PhotoList data={this.state.shibaPhotos} title="Shibas" />
+              )}
+            />
+            <Route
+              exact
+              path="/cats"
+              render={() => (
+                <PhotoList data={this.state.catPhotos} title="Cats" />
+              )}
+            />
+            <Route path="/french-fries" />
           </Switch>
-          <PhotoList data={this.state.photos} />
+          {/* <PhotoList data={this.state.photos} /> */}
         </div>
       </BrowserRouter>
     );
