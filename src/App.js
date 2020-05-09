@@ -70,7 +70,11 @@ export default class App extends Component {
           <SearchForm onSearch={this.performSearch} />
           <Nav />
           <Switch>
-            <Route exact path="/" />
+            <Route
+              exact
+              path="/"
+              render={() => <PhotoList data={this.state.photos} />}
+            />
             <Route
               exact
               path="/shibas"
@@ -86,11 +90,13 @@ export default class App extends Component {
               )}
             />
             <Route
+              exact
               path="/french-fries"
               render={() => (
                 <PhotoList data={this.state.friesPhotos} title="Cats" />
               )}
             />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </BrowserRouter>
