@@ -5,12 +5,9 @@ import axios from "axios";
 // Import components
 import Nav from "./components/Nav";
 import NotFound from "./components/NotFound";
-import Photo from "./components/Photo";
 import apiKey from "./components/config";
 import SearchForm from "./components/SearchForm";
 import PhotoList from "./components/PhotoList";
-
-// https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=a3068f50a631dd9ffb612590d08fb96b&tags=shibas&per_page=&format=json&nojsoncallback=1
 
 export default class App extends Component {
   constructor() {
@@ -78,13 +75,6 @@ export default class App extends Component {
           <Switch>
             <Route
               exact
-              path="/"
-              render={() => (
-                <PhotoList data={this.state.photos} title={this.state.search} />
-              )}
-            />
-            <Route
-              exact
               path="/shibas"
               render={() => (
                 <PhotoList data={this.state.shibaPhotos} title="Shibas" />
@@ -102,6 +92,13 @@ export default class App extends Component {
               path="/french-fries"
               render={() => (
                 <PhotoList data={this.state.friesPhotos} title="Cats" />
+              )}
+            />
+            <Route
+              exact
+              path="/:query"
+              render={() => (
+                <PhotoList data={this.state.photos} title={this.state.search} />
               )}
             />
             <Route component={NotFound} />
