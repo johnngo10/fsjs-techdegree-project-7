@@ -20,6 +20,7 @@ export default class App extends Component {
       shibaPhotos: [],
       catPhotos: [],
       friesPhotos: [],
+      search: [],
     };
   }
 
@@ -44,7 +45,11 @@ export default class App extends Component {
             friesPhotos: res[0][2].data.photos.photo,
           });
         })
-      );
+      )
+      .catch((error) => {
+        // handle error
+        console.log("Error fetching and parsing data", error);
+      });
   }
 
   performSearch = (query) => {
@@ -55,6 +60,7 @@ export default class App extends Component {
       .then((response) => {
         this.setState({
           photos: response.data.photos.photo,
+          search: query,
         });
       })
       .catch((error) => {
@@ -73,7 +79,9 @@ export default class App extends Component {
             <Route
               exact
               path="/"
-              render={() => <PhotoList data={this.state.photos} />}
+              render={() => (
+                <PhotoList data={this.state.photos} title={this.state.search} />
+              )}
             />
             <Route
               exact

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class SearchForm extends Component {
   state = {
@@ -12,6 +12,8 @@ export default class SearchForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    let searchQuery = this.query.value;
+    // let path = `/${searchQuery}`;
     this.props.onSearch(this.state.searchText);
     e.currentTarget.reset();
   };
