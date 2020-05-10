@@ -8,6 +8,7 @@ import NotFound from "./components/NotFound";
 import apiKey from "./components/config";
 import SearchForm from "./components/SearchForm";
 import PhotoList from "./components/PhotoList";
+import Error from "./components/Error";
 
 export default class App extends Component {
   constructor() {
@@ -19,6 +20,7 @@ export default class App extends Component {
       friesPhotos: [],
       search: [],
       loading: true,
+      home: [],
     };
   }
 
@@ -34,6 +36,9 @@ export default class App extends Component {
         axios.get(
           `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=fries&per_page=24&format=json&nojsoncallback=1`
         ),
+        axios.get(
+          `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=puppy&per_page=24&format=json&nojsoncallback=1`
+        ),
       ])
       .then(
         (axios.spread = (...res) => {
@@ -41,6 +46,7 @@ export default class App extends Component {
             shibaPhotos: res[0][0].data.photos.photo,
             catPhotos: res[0][1].data.photos.photo,
             friesPhotos: res[0][2].data.photos.photo,
+            home: res[0][3].data.photos.photo,
             loading: false,
           });
         })
@@ -76,6 +82,11 @@ export default class App extends Component {
           <SearchForm onSearch={this.performSearch} />
           <Nav />
           <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => <PhotoList data={this.state.home} />}
+            />
             <Route
               path="/shibas"
               render={() => (
@@ -116,7 +127,7 @@ export default class App extends Component {
                 />
               )}
             />
-            <Route exact component={NotFound} />
+            <Route component={Error} />
           </Switch>
         </div>
       </BrowserRouter>
