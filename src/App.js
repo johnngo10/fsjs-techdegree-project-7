@@ -18,6 +18,7 @@ export default class App extends Component {
       catPhotos: [],
       friesPhotos: [],
       search: [],
+      loading: true,
     };
   }
 
@@ -40,6 +41,7 @@ export default class App extends Component {
             shibaPhotos: res[0][0].data.photos.photo,
             catPhotos: res[0][1].data.photos.photo,
             friesPhotos: res[0][2].data.photos.photo,
+            loading: false,
           });
         })
       )
@@ -58,6 +60,7 @@ export default class App extends Component {
         this.setState({
           photos: response.data.photos.photo,
           search: query,
+          loading: false,
         });
       })
       .catch((error) => {
@@ -74,34 +77,46 @@ export default class App extends Component {
           <Nav />
           <Switch>
             <Route
-              exact
               path="/shibas"
               render={() => (
-                <PhotoList data={this.state.shibaPhotos} title="Shibas" />
+                <PhotoList
+                  data={this.state.shibaPhotos}
+                  title="Shibas"
+                  loading={this.state.loading}
+                />
               )}
             />
             <Route
-              exact
               path="/cats"
               render={() => (
-                <PhotoList data={this.state.catPhotos} title="Cats" />
+                <PhotoList
+                  data={this.state.catPhotos}
+                  title="Cats"
+                  loading={this.state.loading}
+                />
               )}
             />
             <Route
-              exact
               path="/french-fries"
               render={() => (
-                <PhotoList data={this.state.friesPhotos} title="Cats" />
+                <PhotoList
+                  data={this.state.friesPhotos}
+                  title="Cats"
+                  loading={this.state.loading}
+                />
               )}
             />
             <Route
-              exact
               path="/:query"
               render={() => (
-                <PhotoList data={this.state.photos} title={this.state.search} />
+                <PhotoList
+                  data={this.state.photos}
+                  title={this.state.search}
+                  loading={this.state.loading}
+                />
               )}
             />
-            <Route component={NotFound} />
+            <Route exact component={NotFound} />
           </Switch>
         </div>
       </BrowserRouter>

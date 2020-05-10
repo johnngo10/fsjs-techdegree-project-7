@@ -1,6 +1,6 @@
 body {
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   color: #3f4850;
 }
 
@@ -70,6 +70,7 @@ input {
   justify-content: space-between;
   -ms-align-items: flex-start;
   align-items: flex-start;
+  margin: 0 20px;
 }
 
 .photo-container ul li {
@@ -93,7 +94,7 @@ input {
   width: 100%;
 }
 
-@media only screen and (max-width: 767px)  {
+@media only screen and (max-width: 767px) {
   body {
     padding-top: 2em;
   }
@@ -103,7 +104,7 @@ input {
   }
 }
 
-@media only screen and (min-width: 768px)  {
+@media only screen and (min-width: 768px) {
   body {
     padding-top: 4em;
   }
@@ -117,7 +118,7 @@ input {
     display: flex;
     justify-content: center;
   }
-  
+
   .main-nav li {
     margin: 10px;
     width: 100px;
