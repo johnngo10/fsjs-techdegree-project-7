@@ -4,7 +4,6 @@ import axios from "axios";
 
 // Import components
 import Nav from "./components/Nav";
-import NotFound from "./components/NotFound";
 import apiKey from "./components/config";
 import SearchForm from "./components/SearchForm";
 import PhotoList from "./components/PhotoList";
@@ -58,6 +57,8 @@ export default class App extends Component {
   }
 
   performSearch = (query) => {
+    this.setState({ loading: true });
+
     axios
       .get(
         `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`
@@ -78,7 +79,7 @@ export default class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="App">
+        <div className="container">
           <SearchForm onSearch={this.performSearch} />
           <Nav />
           <Switch>
@@ -118,7 +119,7 @@ export default class App extends Component {
               )}
             />
             <Route
-              path="/:query"
+              path="/search/:query"
               render={() => (
                 <PhotoList
                   data={this.state.photos}

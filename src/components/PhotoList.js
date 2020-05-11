@@ -4,7 +4,6 @@ import NotFound from "./NotFound";
 
 const PhotoList = (props) => {
   const results = props.data;
-  console.log(props.loading);
   let photos;
   if (results.length > 0) {
     photos = results.map((photo) => (
